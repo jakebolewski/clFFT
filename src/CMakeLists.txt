@@ -155,8 +155,8 @@ endif( )
 
 # FFLAGS depend on the compiler, grab the compiler name from the path
 get_filename_component( C_COMPILER_NAME ${CMAKE_C_COMPILER} NAME_WE )
-# message( "C_COMPILER_NAME: " ${C_COMPILER_NAME} )
-# message( "CMAKE_C_COMPILER: " ${CMAKE_C_COMPILER} )
+message( "C_COMPILER_NAME: " ${C_COMPILER_NAME} )
+message( "CMAKE_C_COMPILER: " ${CMAKE_C_COMPILER} )
 
 # Set common compile and link options
 if( C_COMPILER_NAME STREQUAL "cl" )
@@ -176,7 +176,7 @@ if( C_COMPILER_NAME STREQUAL "cl" )
 
 	endif( )
 
-elseif( C_COMPILER_NAME STREQUAL "gcc" )
+elseif( C_COMPILER_NAME STREQUAL "gcc")
 	message( STATUS "Detected GNU fortran compiler." )
 	EXEC_PROGRAM( ${CMAKE_CXX_COMPILER} ARGS --version OUTPUT_VARIABLE vnum )
 	STRING(REGEX REPLACE ".*([0-9])\\.([0-9])\\.([0-9]).*" "\\1\\2\\3" vnum ${vnum})
@@ -197,6 +197,23 @@ elseif( C_COMPILER_NAME STREQUAL "gcc" )
         set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
         set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")
     endif()
+    
+elseif( C_COMPILER_NAME STREQUAL "clang")
+    message( STATUS "Detected Clang compiler." )
+    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ ${CMAKE_CXX_FLAGS})
+    if( BUILD64 )
+        set( CMAKE_CXX_FLAGS "-m64 ${CMAKE_CXX_FLAGS}" )
+        set( CMAKE_C_FLAGS "-m64 ${CMAKE_C_FLAGS}" )
+    else( )
+        set( CMAKE_CXX_FLAGS "-m32 ${CMAKE_CXX_FLAGS}" )
+        set( CMAKE_C_FLAGS "-m32 ${CMAKE_C_FLAGS}" )
+    endif( )
+
+    if( CODE_COVERAGE )
+        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+        set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")
+    endif()
+
 else( )
 	message( FATAL_ERROR "Compiler name not detected" )
 endif( )
