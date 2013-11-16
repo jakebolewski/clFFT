@@ -61,11 +61,15 @@ endif()
 
 set( LD_PTHREAD "" )
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        message( STATUS "TEST GNU")
 	set( CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}" )
 	set( LD_PTHREAD "-lpthread" )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        message( STATUS "TEST Clang")
         set(  CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ ${CMAKE_CXX_FLAGS}")
         set( LD_PTHREAD "-lpthread")
+else()
+        message( STATUS "TEST HOOK UNKNOWN")
 endif()
 
 # Include standard OpenCL headers
