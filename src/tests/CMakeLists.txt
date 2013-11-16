@@ -60,10 +60,13 @@ else()
 endif()
 
 set( LD_PTHREAD "" )
-if( CMAKE_COMPILER_IS_GNUCXX )
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
 	set( CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}" )
 	set( LD_PTHREAD "-lpthread" )
-endif( )
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        set(  CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+        set( LD_PTHREAD "-lpthread")
+endif()
 
 # Include standard OpenCL headers
 include_directories( ${Boost_INCLUDE_DIRS} ${GTEST_INCLUDE_DIRS} ${FFTW_INCLUDE_DIRS} ${OPENCL_INCLUDE_DIRS}  ${PROJECT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/include )
