@@ -200,7 +200,7 @@ elseif( C_COMPILER_NAME STREQUAL "gcc")
     
 elseif( C_COMPILER_NAME STREQUAL "clang")
     message( STATUS "Detected Clang compiler." )
-    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ ${CMAKE_CXX_FLAGS})
+    set( CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ ${CMAKE_CXX_FLAGS})
     if( BUILD64 )
         set( CMAKE_CXX_FLAGS "-m64 ${CMAKE_CXX_FLAGS}" )
         set( CMAKE_C_FLAGS "-m64 ${CMAKE_C_FLAGS}" )
