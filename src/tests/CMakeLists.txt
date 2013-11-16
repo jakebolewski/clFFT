@@ -60,7 +60,7 @@ else()
 endif()
 
 set( LD_PTHREAD "" )
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set( CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}" )
 	set( LD_PTHREAD "-lpthread" )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
